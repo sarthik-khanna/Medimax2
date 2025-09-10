@@ -1,4 +1,5 @@
 import React from 'react';
+import Chatboat from '../components/Chatboat.jsx';
 import { Link } from 'react-router-dom';
 import { Shield, Clock, AlertTriangle, FileText, Heart, Users } from 'lucide-react';
 
@@ -38,7 +39,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-hidden">
+    <>
+      <Chatboat />
+      <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-teal-50 py-20 relative">
         {/* Floating background elements */}
@@ -97,7 +100,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+  {/* Features Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
@@ -181,6 +184,7 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
