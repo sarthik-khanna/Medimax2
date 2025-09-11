@@ -3,7 +3,6 @@ import { FaRobot } from "react-icons/fa";
 
 const Chatboat = () => {
   useEffect(() => {
-    // Load Chatbase script
     (function () {
       if (!window.chatbase || window.chatbase("getState") !== "initialized") {
         window.chatbase = (...args) => {
@@ -23,11 +22,11 @@ const Chatboat = () => {
       const onLoad = function () {
         const script = document.createElement("script");
         script.src = "https://www.chatbase.co/embed.min.js";
-        script.id = "Yfv1A9736OSbeT_TBtkTa"; // 👈 replace with your Chatbase bot ID
+        script.id = "w87DIeuD8N2gKyytzCr7N"; // ✅ use your Chatbase bot ID here
         script.domain = "www.chatbase.co";
         script.setAttribute("defer", "true");
 
-        // Hide Chatbase default floating button
+        // Hide Chatbase default floating button (optional)
         script.setAttribute("data-hide-chat-button", "true");
 
         document.body.appendChild(script);
@@ -41,7 +40,7 @@ const Chatboat = () => {
     })();
   }, []);
 
-  // Handle button click to open chat
+  // Custom button to trigger Chatbase chat
   const openChat = () => {
     if (window.chatbase) {
       window.chatbase("openChat");
