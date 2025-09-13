@@ -4,22 +4,44 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+    const [loginType, setLoginType] = useState<'user' | 'doctor'>('user');
+    const [doctorId, setDoctorId] = useState('');
   const { login, googleSignIn } = useAuth();
   const navigate = useNavigate();
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setError('');
+    setIsLoading(true);
     try {
-      setError('');
-      setIsLoading(true);
-      await login(email, password);
-      navigate('/dashboard');
+        if (loginType === 'doctor') {
+          if (!doctorId.trim()) {
+            setError('Doctor ID is required.');
+            setIsLoading(false);
+            return;
+          }
+        }
+        await login(email, password);
+      if (loginType === 'doctor') {
+        // You can use a domain check or a custom claim in Firebase for real apps
+        // Here, we just check if email contains 'doctor' for demo
+        if (email.toLowerCase().includes('doctor')) {
+          navigate('/dashboard');
+        } else {
+          setError('Not a valid doctor account.');
+          setIsLoading(false);
+          return;
+        }
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       setError('Failed to sign in. Please check your credentials.');
     }
@@ -43,8 +65,24 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            {loginType === 'doctor' ? 'Doctor Login' : 'Sign in to your account'}
           </h2>
+          <div className="flex justify-center mt-4 space-x-2">
+            <button
+              className={`px-4 py-2 rounded-l-lg font-medium border ${loginType === 'user' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
+              onClick={() => setLoginType('user')}
+              type="button"
+            >
+              User Login
+            </button>
+            <button
+              className={`px-4 py-2 rounded-r-lg font-medium border ${loginType === 'doctor' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
+              onClick={() => setLoginType('doctor')}
+              type="button"
+            >
+              Doctor Login
+            </button>
+          </div>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{' '}
             <Link
@@ -55,7 +93,6 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        
         <div className="bg-white rounded-lg shadow-xl p-8">
           {error && (
             <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
@@ -63,7 +100,8 @@ const Login = () => {
             </div>
           )}
           
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* Removed duplicate <form> tag, only one form is rendered below */}
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -111,6 +149,23 @@ const Login = () => {
               </div>
             </div>
 
+              {loginType === 'doctor' && (
+                <div className="mt-4">
+                  <label htmlFor="doctor-id" className="sr-only">
+                    Doctor ID
+                  </label>
+                  <input
+                    id="doctor-id"
+                    name="doctorId"
+                    type="text"
+                    required
+                    value={doctorId}
+                    onChange={(e) => setDoctorId(e.target.value)}
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                    placeholder="Doctor ID"
+                  />
+                </div>
+              )}
             <div>
               <button
                 type="submit"

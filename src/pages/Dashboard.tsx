@@ -35,6 +35,12 @@ const Dashboard = () => {
       color: 'bg-yellow-100 text-yellow-600',
       change: 'Moderate severity'
     },
+      { 
+        label: 'Blood Donated', 
+        value: '0', // Replace with actual value if available
+        icon: <svg className="h-6 w-6 text-pink-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21c-4.418 0-8-3.582-8-8 0-3.866 3.134-7 7-7s7 3.134 7 7c0 4.418-3.582 8-8 8z" /><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18" /></svg>,
+        color: 'bg-pink-100',
+      },
   ];
 
   const recentActivity = [
