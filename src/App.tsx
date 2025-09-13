@@ -12,12 +12,15 @@ import Reminders from './pages/Reminders';
 import Alerts from './pages/Alerts';
 import Dashboard from './pages/Dashboard';
 
+import VoiceAssistant from './components/VoiceAssistant';
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-50">
           <Navbar />
+          <VoiceAssistant />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

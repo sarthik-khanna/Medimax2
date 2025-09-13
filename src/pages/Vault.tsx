@@ -1,99 +1,116 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, FileText, Shield, Syringe, AlertCircle, Download, Eye } from 'lucide-react';
+
+const prescriptions = [
+  {
+    id: 1,
+    medication: 'Atorvastatin',
+    dosage: '10mg',
+    frequency: 'Once daily',
+    doctor: 'Dr. Smith',
+    date: '2023-09-01',
+    status: 'Active',
+  },
+  {
+    id: 2,
+    medication: 'Metformin',
+    dosage: '500mg',
+    frequency: 'Twice daily',
+    doctor: 'Dr. Lee',
+    date: '2023-08-15',
+    status: 'Inactive',
+  },
+];
+
+const reports = [
+  {
+    id: 1,
+    name: 'Blood Test',
+    type: 'CBC',
+    doctor: 'Dr. Brown',
+    date: '2023-07-20',
+    status: 'Normal',
+  },
+  {
+    id: 2,
+    name: 'X-Ray',
+    type: 'Chest',
+    doctor: 'Dr. Green',
+    date: '2023-06-10',
+    status: 'Reviewed',
+  },
+];
+
+const allergies = [
+  {
+    id: 1,
+    allergen: 'Peanuts',
+    reaction: 'Anaphylaxis',
+    severity: 'Severe',
+    dateIdentified: '2020-05-01',
+  },
+  {
+    id: 2,
+    allergen: 'Penicillin',
+    reaction: 'Rash',
+    severity: 'Moderate',
+    dateIdentified: '2019-11-12',
+  },
+];
+
+const vaccinations = [
+  {
+    id: 1,
+    vaccine: 'Influenza',
+    dose: 'Annual',
+    date: '2023-10-01',
+    location: 'Family Clinic',
+    nextDue: '2024-10-01',
+  },
+  {
+    id: 2,
+    vaccine: 'COVID-19',
+    dose: 'Booster',
+    date: '2023-03-15',
+    location: 'City Hospital',
+    nextDue: '2024-03-15',
+  },
+];
+
+const tabs = [
+  { id: 'prescriptions', name: 'Prescriptions', icon: <FileText className="h-5 w-5" /> },
+  { id: 'reports', name: 'Medical Reports', icon: <FileText className="h-5 w-5" /> },
+  { id: 'allergies', name: 'Allergies', icon: <AlertCircle className="h-5 w-5" /> },
+  { id: 'vaccinations', name: 'Vaccinations', icon: <Syringe className="h-5 w-5" /> },
+];
 
 const Vault = () => {
   const [activeTab, setActiveTab] = useState('prescriptions');
 
-  const tabs = [
-    { id: 'prescriptions', name: 'Prescriptions', icon: <FileText className="h-5 w-5" /> },
-    { id: 'reports', name: 'Medical Reports', icon: <FileText className="h-5 w-5" /> },
-    { id: 'allergies', name: 'Allergies', icon: <AlertCircle className="h-5 w-5" /> },
-    { id: 'vaccinations', name: 'Vaccinations', icon: <Syringe className="h-5 w-5" /> },
-  ];
-
-  const prescriptions = [
-    {
-      id: 1,
-      medication: 'Amoxicillin',
-      dosage: '500mg',
-      frequency: 'Twice daily',
-      doctor: 'Dr. Smith',
-      date: '2024-01-15',
-      status: 'Active'
-    },
-    {
-      id: 2,
-      medication: 'Lisinopril',
-      dosage: '10mg',
-      frequency: 'Once daily',
-      doctor: 'Dr. Johnson',
-      date: '2024-01-10',
-      status: 'Active'
-    }
-  ];
-
-  const reports = [
-    {
-      id: 1,
-      name: 'Blood Test Results',
-      type: 'Lab Report',
-      date: '2024-01-20',
-      doctor: 'Dr. Wilson',
-      status: 'Normal'
-    },
-    {
-      id: 2,
-      name: 'Chest X-Ray',
-      type: 'Imaging',
-      date: '2024-01-15',
-      doctor: 'Dr. Brown',
-      status: 'Normal'
-    }
-  ];
-
-  const allergies = [
-    {
-      id: 1,
-      allergen: 'Penicillin',
-      reaction: 'Skin rash, swelling',
-      severity: 'Severe',
-      dateIdentified: '2020-03-15'
-    },
-    {
-      id: 2,
-      allergen: 'Shellfish',
-      reaction: 'Nausea, hives',
-      severity: 'Moderate',
-      dateIdentified: '2019-08-22'
-    }
-  ];
-
-  const vaccinations = [
-    {
-      id: 1,
-      vaccine: 'COVID-19 (Pfizer)',
-      dose: '2nd Dose',
-      date: '2023-12-15',
-      location: 'City Health Center',
-      nextDue: '2024-12-15'
-    },
-    {
-      id: 2,
-      vaccine: 'Influenza',
-      dose: 'Annual',
-      date: '2023-10-01',
-      location: 'Family Clinic',
-      nextDue: '2024-10-01'
-    }
-  ];
+  useEffect(() => {
+    const handler = (e: any) => {
+      const { object, section } = e.detail || {};
+      if (section && tabs.some(t => t.id === section)) {
+        setActiveTab(section);
+        setTimeout(() => {
+          if (object) {
+            const el = document.querySelector(`[data-voice-section="${object.toLowerCase()}"]`);
+            if (el) (el as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      }
+    };
+    window.addEventListener('voice-open-object', handler);
+    return () => window.removeEventListener('voice-open-object', handler);
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
       case 'prescriptions':
         return (
-          <div className="space-y-4">
+          <div className="space-y-4" data-voice-section="prescriptions">
             {prescriptions.map(prescription => (
-              <div key={prescription.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-blue-500">
+              <div key={prescription.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-blue-500" data-voice-section={prescription.medication.toLowerCase()}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{prescription.medication}</h3>
@@ -103,8 +120,8 @@ const Vault = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className={`px-3 py-1 text-xs rounded-full ${
-                      prescription.status === 'Active' 
-                        ? 'bg-green-100 text-green-800' 
+                      prescription.status === 'Active'
+                        ? 'bg-green-100 text-green-800'
                         : 'bg-gray-100 text-gray-800'
                     }`}>
                       {prescription.status}
@@ -121,12 +138,11 @@ const Vault = () => {
             ))}
           </div>
         );
-      
       case 'reports':
         return (
-          <div className="space-y-4">
+          <div className="space-y-4" data-voice-section="reports">
             {reports.map(report => (
-              <div key={report.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-purple-500">
+              <div key={report.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-purple-500" data-voice-section={report.name.toLowerCase()}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{report.name}</h3>
@@ -150,12 +166,11 @@ const Vault = () => {
             ))}
           </div>
         );
-      
       case 'allergies':
         return (
-          <div className="space-y-4">
+          <div className="space-y-4" data-voice-section="allergies">
             {allergies.map(allergy => (
-              <div key={allergy.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-red-500">
+              <div key={allergy.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-red-500" data-voice-section={allergy.allergen.toLowerCase()}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{allergy.allergen}</h3>
@@ -163,8 +178,8 @@ const Vault = () => {
                     <p className="text-sm text-gray-500">Identified: {allergy.dateIdentified}</p>
                   </div>
                   <span className={`px-3 py-1 text-xs rounded-full ${
-                    allergy.severity === 'Severe' 
-                      ? 'bg-red-100 text-red-800' 
+                    allergy.severity === 'Severe'
+                      ? 'bg-red-100 text-red-800'
                       : allergy.severity === 'Moderate'
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-green-100 text-green-800'
@@ -176,12 +191,11 @@ const Vault = () => {
             ))}
           </div>
         );
-      
       case 'vaccinations':
         return (
-          <div className="space-y-4">
+          <div className="space-y-4" data-voice-section="vaccinations">
             {vaccinations.map(vaccination => (
-              <div key={vaccination.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
+              <div key={vaccination.id} className="bg-white p-6 rounded-lg shadow border-l-4 border-green-500" data-voice-section={vaccination.vaccine.toLowerCase()}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{vaccination.vaccine}</h3>
@@ -198,7 +212,6 @@ const Vault = () => {
             ))}
           </div>
         );
-      
       default:
         return null;
     }
@@ -246,6 +259,7 @@ const Vault = () => {
                       ? 'border-blue-500 text-blue-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
+                  data-voice-section={tab.id}
                 >
                   {tab.icon}
                   <span>{tab.name}</span>
@@ -253,7 +267,6 @@ const Vault = () => {
               ))}
             </nav>
           </div>
-
           {/* Content */}
           <div className="p-6">
             <div className="flex justify-between items-center mb-6">
@@ -265,7 +278,6 @@ const Vault = () => {
                 <span>Add New</span>
               </button>
             </div>
-
             {renderContent()}
           </div>
         </div>
@@ -275,3 +287,4 @@ const Vault = () => {
 };
 
 export default Vault;
+
