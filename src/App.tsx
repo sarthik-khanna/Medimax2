@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
@@ -11,16 +11,14 @@ import Vault from './pages/Vault';
 import Reminders from './pages/Reminders';
 import Alerts from './pages/Alerts';
 import Dashboard from './pages/Dashboard';
-
-import VoiceAssistant from './components/VoiceAssistant';
-
+import { VoiceAssistant } from './components/VoiceAssistant';
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-50">
           <Navbar />
-          <VoiceAssistant />
+          <VoiceAssistant onNavigate={() => {}} currentPage="dashboard" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

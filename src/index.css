@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ----------------- */
 /* Custom animations */
+/* ----------------- */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -66,13 +68,13 @@
   animation-duration: 0.5s;
 }
 
-/* Smooth transitions for all interactive elements */
+/* Smooth transitions */
 * {
   transition-property: transform, opacity, box-shadow, background-color, border-color, color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Custom gradient animations */
+/* Gradient animation */
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -90,7 +92,7 @@
   animation: gradientShift 3s ease infinite;
 }
 
-/* Additional animations for diseases page */
+/* Diseases page animations */
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -138,12 +140,12 @@
   animation: symptomPulse 0.6s ease-in-out;
 }
 
-/* Enhanced hover effects for disease cards */
+/* Enhanced hover effects */
 .group:hover .animate-pulse {
   animation-duration: 1s;
 }
 
-/* Staggered animation delays for grid items */
+/* Staggered animation delays */
 .grid > *:nth-child(1) { animation-delay: 0.1s; }
 .grid > *:nth-child(2) { animation-delay: 0.2s; }
 .grid > *:nth-child(3) { animation-delay: 0.3s; }
@@ -151,8 +153,158 @@
 .grid > *:nth-child(5) { animation-delay: 0.5s; }
 .grid > *:nth-child(6) { animation-delay: 0.6s; }
 
-/* Search input focus animation */
+/* Search focus animation */
 .search-input:focus + .search-icon {
   transform: scale(1.2) rotate(90deg);
   color: #3b82f6;
 }
+
+/* ------------------------------ */
+/* MediMax Healthcare Design System */
+/* ------------------------------ */
+/* @layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  } */
+
+  :root {
+    /* Background */
+    --background: 210 25% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Card */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary */
+    --primary: 210 85% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 210 85% 40%;
+    --primary-light: 210 85% 95%;
+
+    /* Secondary */
+    --secondary: 160 60% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 160 60% 40%;
+    --secondary-light: 160 60% 95%;
+
+    /* Muted */
+    --muted: 210 15% 95%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Accent */
+    --accent: 25 95% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 25 95% 95%;
+
+    /* Status */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --success-light: 142 76% 95%;
+
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+    --warning-light: 45 93% 95%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 210 15% 90%;
+    --input: 210 15% 95%;
+    --ring: 210 85% 45%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(210 85% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(160 60% 40%));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(25 95% 50%));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(var(--primary) / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(var(--primary) / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--primary) / 0.1);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Radius */
+    --radius: 0.5rem;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary (Dark) */
+    --primary: 210 85% 60%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --primary-hover: 210 85% 55%;
+    --primary-light: 210 85% 15%;
+
+    /* Secondary (Dark) */
+    --secondary: 160 60% 50%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary-hover: 160 60% 45%;
+    --secondary-light: 160 60% 15%;
+
+    /* Muted */
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    /* Accent (Dark) */
+    --accent: 25 95% 65%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --accent-light: 25 95% 15%;
+
+    /* Status (Dark) */
+    --success: 142 76% 45%;
+    --success-foreground: 222.2 84% 4.9%;
+    --success-light: 142 76% 15%;
+
+    --warning: 45 93% 57%;
+    --warning-foreground: 222.2 84% 4.9%;
+    --warning-light: 45 93% 15%;
+
+    --destructive: 0 72% 61%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Borders & Inputs (Dark) */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 210 85% 60%;
+
+    /* Sidebar (Dark) */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
